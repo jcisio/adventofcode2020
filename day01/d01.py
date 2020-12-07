@@ -16,7 +16,9 @@ def findThreeEntriesProduct(lines, needed_sum, i, j):
   # But then I thought it would be OK because the test case should be
   # random and duplicated elements are rare and the question is even
   # not clear about if it is possible to take one element twice. Thus
-  # I went with a classic set.
+  # I went with a classic set. Actually it is O(N^2) but could be
+  # reduced to O(N) using double pointer as in the first part. But I
+  # don't care because I'm already late. It's December 7th today.
   s = set(lines)
   for a in range(j-i):
     for b in range(a+1,j+1):
