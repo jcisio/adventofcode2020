@@ -14,7 +14,7 @@ def runProgram(program):
     acc, i = 0, 0
     while i < len(program):
         if i in executed:
-            return acc
+            return (False, acc)
         executed.add(i)
         if program[i][0] == 'nop':
             i += 1
@@ -23,7 +23,22 @@ def runProgram(program):
             i += 1
         else:
             i += program[i][1]
-    raise RuntimeError('Not expected to end the program without infinite loop.')
+    return (True, acc)
+
+
+def runProgramCorrectly(program):
+    for i in range(len(program)):
+        if program[i][0] == 'acc':
+            continue
+        else:
+            op = program[i][0]
+            program[i][0] = 'jmp' if op == 'nop' else 'nop'
+            ok, acc = runProgram(program)
+            if ok:
+                return acc
+            program[i][0] = op
+
 
 program = readProgram(f)
-print("Puzzle 1: ", runProgram(program))
+print("Puzzle 1: ", runProgram(program)[1])
+print("Puzzle 2: ", runProgramCorrectly(program))
