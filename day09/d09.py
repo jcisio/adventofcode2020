@@ -19,5 +19,16 @@ def findOddNumber(numbers):
         p += 1
 
 
+def findOddSeries(numbers, total):
+    accumulated_sum = [0]*(len(numbers)+1)
+    for i in range(len(numbers)):
+        accumulated_sum[i+1] = numbers[i] + accumulated_sum[i]
+    for i in range(len(numbers)-1):
+        for j in range(i, len(numbers)):
+            if accumulated_sum[j+1] - accumulated_sum[i] == total:
+                return min(numbers[i:j+1]) + max(numbers[i:j+1])
+
+
 numbers = list(map(int, f.read().strip().split('\n')))
 print("Puzzle 1: ", findOddNumber(numbers))
+print("Puzzle 2: ", findOddSeries(numbers, findOddNumber(numbers)))
