@@ -12,7 +12,7 @@ def readInput(f):
     return foods
 
 
-def findPuzzle1(foods):
+def parseFoods(foods):
     possibleIngredients = {}
     mapping = dict() # ingredient => allergen
     while True:
@@ -43,8 +43,20 @@ def findPuzzle1(foods):
                 foods[i][0].remove(ingredient)
                 if mapping[ingredient] in foods[i][1]:
                     foods[i][1].remove(mapping[ingredient])
+    return foods, mapping
+
+
+def findPuzzle1(foods):
+    foods, mapping = parseFoods(foods)
     return sum([len(food[0]) for food in foods])
+
+
+def findPuzzle2(foods):
+    foods, mapping = parseFoods(foods)
+    ingredients = [item[0] for item in sorted(mapping.items(), key=lambda item: item[1])]
+    return ','.join(ingredients)
 
 
 foods = readInput(f)
 print("Puzzle 1: ", findPuzzle1(copy.deepcopy(foods)))
+print("Puzzle 1: ", findPuzzle2(copy.deepcopy(foods)))
