@@ -21,6 +21,8 @@ def playGame(player1, player2):
 
 def playRecursiveCombat(player1, player2, game):
     print('New game', game, player1, player2, file=sys.stderr)
+    if game > 1 and max(player1) > max(player2):
+        return 1
     states = set()
     round = 0
     while player1 and player2:
