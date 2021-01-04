@@ -16,14 +16,16 @@ def findRound(rounds, n):
 
 
 def findRoundOptimize(rounds, n):
-    positions = {}
+    # Use array instead of dict to optimize performance. It's 25% faster in
+    # CPython (15s vs 20s) and 66% faster in Pypy (3.3s vs 10s).
+    positions = [-1] * (n + max(rounds))
     for i in range(len(rounds)-1):
         positions[rounds[i]] = i
     last_number = rounds[-1]
     current = len(rounds)
     while current < n:
 #        print(current, last_number, rounds)
-        if last_number in positions:
+        if positions[last_number] != -1:
             new_last_number = current - positions[last_number] - 1
         else:
             new_last_number = 0
